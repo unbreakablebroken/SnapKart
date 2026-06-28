@@ -1,0 +1,48 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+         request.auth.token.email.endsWith('@snapkart-admin.com') ||
+         request.auth.uid == 'partner_admin_1' ||
+         request.auth.uid == 'partner_admin_2' ||
+         request.auth.uid == 'partner_admin_3');
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Products collection rules
+    match /products/{productId} {
+      allow read: if true; // Publicly readable for shopping
+      allow create, update, delete: if isSignedIn() && (isAdmin() || request.resource.data.createdBy == request.auth.uid);
+    }
+
+    // Orders collection rules
+    match /orders/{orderId} {
+      allow read: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isSignedIn() && request.resource.data.userId == request.auth.uid;
+      allow update: if isSignedIn() && (resource.data.userId == request.auth.uid || isAdmin());
+      allow delete: if isSignedIn() && isAdmin();
+    }
+
+    // Users profiles rules
+    match /users/{userId} {
+      allow read: if isSignedIn() && (isOwner(userId) || isAdmin());
+      allow create, update: if isSignedIn() && isOwner(userId);
+      allow delete: if isSignedIn() && isAdmin();
+    }
+  }
+}

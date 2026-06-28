@@ -1,0 +1,6 @@
+{
+  "name": "SnapKart",
+  "description": "A minimalistic dropshipping platform with integrated inventory tracking, multi-theme support (Light, Dark, Eco), order history, tracking, and a secure admin panel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

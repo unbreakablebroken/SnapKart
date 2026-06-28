@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Custom Editorial Theme Classes */
+.editorial-bg {
+  background-color: #fdfdfc;
+}
+
+.editorial-text-main {
+  color: #1a1a1a;
+}
+
+.editorial-border {
+  border-color: #ececeb;
+}
+
+.editorial-card {
+  background-color: #ffffff;
+  border: 1px solid #ececeb;
+  border-radius: 12px;
+}
+
+.editorial-sidebar-heading {
+  font-size: 9px;
+  font-weight: 700;
+  color: #aaaaaa;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.editorial-meta-text {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: #888888;
+  letter-spacing: 0.15em;
+}
+
+/* Smooth fade animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

@@ -1,0 +1,69 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A dropshipping product available for purchase or created by admins",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique product ID" },
+        "name": { "type": "string", "description": "Product name" },
+        "description": { "type": "string", "description": "Detailed description of the product" },
+        "price": { "type": "number", "description": "Retail selling price for consumers" },
+        "wholesalePrice": { "type": "number", "description": "Dropshipping wholesale cost from suppliers" },
+        "image": { "type": "string", "description": "Product image URL" },
+        "inventory": { "type": "number", "description": "Available stock level in supplier warehouse" },
+        "category": { "type": "string", "description": "Product category" },
+        "createdAt": { "type": "string", "description": "Timestamp of creation" },
+        "createdBy": { "type": "string", "description": "UID of the admin who added the product" }
+      },
+      "required": ["id", "name", "price", "image", "inventory", "category"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "An order placed by a customer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique order ID" },
+        "userId": { "type": "string", "description": "UID of the customer" },
+        "customerName": { "type": "string", "description": "Name of the customer for shipping" },
+        "customerEmail": { "type": "string", "description": "Email address of the customer" },
+        "shippingAddress": { "type": "string", "description": "Full shipping address" },
+        "items": { "type": "array", "description": "List of items in the order" },
+        "totalAmount": { "type": "number", "description": "Total checkout price" },
+        "status": { "type": "string", "description": "Status of order tracking (pending, processing, shipped, out_for_delivery, delivered)" },
+        "trackingNumber": { "type": "string", "description": "Carrier tracking number" },
+        "paymentId": { "type": "string", "description": "Payment transaction ID from the secure gateway" },
+        "createdAt": { "type": "string", "description": "Order creation date" }
+      },
+      "required": ["id", "userId", "customerName", "customerEmail", "shippingAddress", "items", "totalAmount", "status", "createdAt"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Customer or partner user account info",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "User UID matching auth" },
+        "name": { "type": "string", "description": "User's full name" },
+        "email": { "type": "string", "description": "Verified email address" },
+        "address": { "type": "string", "description": "Saved shipping address" },
+        "role": { "type": "string", "description": "User access role: user or admin" },
+        "createdAt": { "type": "string", "description": "Account registration timestamp" }
+      },
+      "required": ["id", "email", "role"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Collection of all available products"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Collection of orders placed by customers"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Collection of user profiles containing account role and settings"
+    }
+  }
+}
