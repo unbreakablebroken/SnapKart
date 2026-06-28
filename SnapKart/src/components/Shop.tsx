@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "../lib/firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { Product } from "../types";
-import { INITIAL_PRODUCTS } from "../data/initialProducts";
+import { INITIAL_PRODUCTS } from "../initialProducts";
 import { Search, Filter, ShoppingCart, Plus, HelpCircle, Package, Info, Check, CheckCircle } from "lucide-react";
 
 interface ShopProps {
